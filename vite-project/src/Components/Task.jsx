@@ -41,11 +41,8 @@ function Task() {
     const [editDescription, setEditDescription] = useState("");
     const [editProirety, setEditProirety] = useState("");
 
-    console.log(todos);
-    let xc = todos
     const [searchTerm, setSearchTerm] = useState('');
     const [FilterData, setFilterData] = useState([]);
-
 
 
 
@@ -137,149 +134,149 @@ function Task() {
     }
 
     return (
-        <div>
+        <div className="h-auto">
+            <div  >
 
-            <div className={style.container}>
+                <div className={style.container}>
 
-                <h3 className={style.heading}>Todo App</h3>
-                <form className={style.form} onSubmit={createTodo}>
-
-                    <input type='text' placeholder='Search' style={{ border: "1px solid black", }}
-                        value={searchTerm}
-                        onChange={(e) => {
-                            setSearchTerm(e.target.value);
-                            filterDataByName(e.target.value);
-                        }
-                        } />
-
-
-                    <input
-                        className={style.input}
-                        type="text"
-                        placeholder="Title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                    />
-                    <input
-                        className={style.input}
-                        type="date"
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                    />
-                    <input
-                        className={style.input}
-                        type="time"
-                        value={time}
-                        onChange={(e) => setTime(e.target.value)}
-                    />
-                    <textarea
-                        className={style.input}
-                        placeholder="Description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                    ></textarea>
-                    <select
-                        className={style.input}
-                        value={priority}
-                        onChange={(e) => setPriority(e.target.value)}
-                    >
-                        <option value="low">Low</option>
-                        <option value="medium">Medium</option>
-                        <option value="high">High</option>
-                    </select>
-                    <button className={style.button}>
-                        <AiOutlinePlus size={30} />
-                    </button>
-                </form>
-
-                {selectedTodo ? (
-                    <div>
-
-
-                        <input
-                            className={style.input}
-                            type="text"
-                            value={editText}
+                    <h3 className={style.heading}>Todo App</h3>
+                    <form className={style.form} onSubmit={createTodo}>
+                        <input type='text' placeholder='Search' style={{ border: "1px solid black", }}
+                            value={searchTerm}
                             onChange={(e) => {
-                                setEditText(e.target.value);
-
-                            }}
-
-                        />
-
-
-                        <input
-                            className={style.input}
-                            type="text"
-                            value={editDate}
-                            onChange={(e) => {
-                                setEditDate(e.target.value);
-
-                            }}
-
-                        />
-
-                        <input
-                            className={style.input}
-                            type="text"
-                            value={editTime}
-                            onChange={(e) => {
-                                setEditTime(e.target.value);
-
-                            }}
-
-                        />
-                        <input
-                            className={style.input}
-                            type="text"
-                            value={editDescription}
-                            onChange={(e) => {
-                                setEditDescription(e.target.value);
-
-                            }}
-
-                        />
-
-                        <input
-                            className={style.input}
-                            type="text"
-                            value={editProirety}
-                            onChange={(e) => {
-                                setEditProirety(e.target.value);
-
-                            }}
-
-                        />
-
-
-                        <button className={style.saveButton} onClick={updateTodo}>
-                            Save
-                        </button>
-                    </div>
-                ) : (
-                    <div>
-                        <ul className={style.todoList}>
-                            {FilterData?.map((todo) => {
-                                return (
-                                    <>
-                                        <Todo
-                                            key={todo.id}
-                                            todo={todo}
-                                            toggleComplete={toggleComplete}
-                                            deleteTodo={deleteTodo}
-                                            editTodo={handleEditTodo}
-                                            updateTodo={updateTodo}
-                                        />
-                                    </>
-                                )
+                                setSearchTerm(e.target.value);
+                                filterDataByName(e.target.value);
                             }
+                            } />
+                        <input
+                            className={style.input}
+                            type="text"
+                            placeholder="Title"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                        />
+                        <input
+                            className={style.input}
+                            type="date"
+                            value={date}
+                            onChange={(e) => setDate(e.target.value)}
+                        />
+                        <input
+                            className={style.input}
+                            type="time"
+                            value={time}
+                            onChange={(e) => setTime(e.target.value)}
+                        />
+                        <textarea
+                            className={style.input}
+                            placeholder="Description"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        ></textarea>
+                        <label className="text-2xl font-bold">Priority</label>
+                        <select
+                            className={style.input}
+                            value={priority}
+                            onChange={(e) => setPriority(e.target.value)}
+                        >
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                        <button className={style.button}>
+                            <AiOutlinePlus size={30} />
+                        </button>
+                    </form>
+
+                    {selectedTodo ? (
+                        <div>
+
+
+                            <input
+                                className={style.input}
+                                type="text"
+                                value={editText}
+                                onChange={(e) => {
+                                    setEditText(e.target.value);
+
+                                }}
+
+                            />
+
+
+                            <input
+                                className={style.input}
+                                type="text"
+                                value={editDate}
+                                onChange={(e) => {
+                                    setEditDate(e.target.value);
+
+                                }}
+
+                            />
+
+                            <input
+                                className={style.input}
+                                type="text"
+                                value={editTime}
+                                onChange={(e) => {
+                                    setEditTime(e.target.value);
+
+                                }}
+
+                            />
+                            <input
+                                className={style.input}
+                                type="text"
+                                value={editDescription}
+                                onChange={(e) => {
+                                    setEditDescription(e.target.value);
+
+                                }}
+
+                            />
+
+                            <input
+                                className={style.input}
+                                type="text"
+                                value={editProirety}
+                                onChange={(e) => {
+                                    setEditProirety(e.target.value);
+
+                                }}
+
+                            />
+
+
+                            <button className={style.saveButton} onClick={updateTodo}>
+                                Save
+                            </button>
+                        </div>
+                    ) : (
+                        <div>
+                            <ul className={style.todoList}>
+                                {FilterData?.map((todo) => {
+                                    return (
+                                        <>
+                                            <Todo
+                                                key={todo.id}
+                                                todo={todo}
+                                                toggleComplete={toggleComplete}
+                                                deleteTodo={deleteTodo}
+                                                editTodo={handleEditTodo}
+                                                updateTodo={updateTodo}
+                                            />
+                                        </>
+                                    )
+                                }
+                                )}
+                            </ul>
+                            {FilterData.length < 1 ? null : (
+                                <p className={style.count}>{`You have ${FilterData.length} todos`}</p>
                             )}
-                        </ul>
-                        {FilterData.length < 1 ? null : (
-                            <p className={style.count}>{`You have ${FilterData.length} todos`}</p>
-                        )}
-                    </div>
-                )}
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );

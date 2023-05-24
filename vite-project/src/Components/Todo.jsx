@@ -1,14 +1,18 @@
 import React from "react";
 import { FaTrash, FaEdit } from "react-icons/fa";
+const style ={
+    li: `flex justify-between bg-white p-4 my-2 capitalize  `,
+     liComplete: `flex justify-between bg-green-400 p-4 my-2 capitalize line-through `   ,
 
+}
 const Todo = ({ todo, toggleComplete, deleteTodo, editTodo }) => {
     const handleEditClick = () => {
         editTodo(todo);
     };
 
     return (
-        <li className="flex items-center justify-between mb-4 p-4 bg-white rounded-lg border border-gray-200">
-            <div className="flex items-center">
+<li className={todo.completed ? style.liComplete : style.li}>      
+      <div className="flex items-center">
                 <input
                     type="checkbox"
                     checked={todo.completed}
