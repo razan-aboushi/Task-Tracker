@@ -200,6 +200,27 @@ function Task() {
                             }}
 
                         />
+                        <input
+                            className={style.input}
+                            type="text"
+                            value={editDescription}
+                            onChange={(e) => {
+                                setEditDescription(e.target.value);
+
+                            }}
+
+                        />
+
+                        <input
+                            className={style.input}
+                            type="text"
+                            value={editProirety}
+                            onChange={(e) => {
+                                setEditProirety(e.target.value);
+
+                            }}
+
+                        />
 
 
                         <button className={style.saveButton} onClick={updateTodo}>
