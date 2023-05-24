@@ -8,11 +8,12 @@ import Home from './Components/Home'
 import Footer from './Components/Footer'
 import Contact from './Components/Contact'
 import { About } from './Components/About'
-import Task from './Components/Task'
 import Login from './Components/Login'
 import Signup from './Components/Signup'
+import Task from './Components/Task'
+
+
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <div>
