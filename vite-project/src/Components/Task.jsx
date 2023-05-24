@@ -13,31 +13,53 @@ import {
 } from "firebase/firestore";
 
 const style = {
-    bg: `h-screen w-screen p-4 bg-gradient-to-r from-red-300 to-red-200`,
-    container: `bg-slate-100 max-w-[500px] w-full m-auto rounded-md shadow-xl p-4`,
-    heading: `text-3xl font-bold text-center text-gray-800 p-2`,
-    form: `flex justify-between`,
-    input: `border p-2 w-full text-xl`,
-    button: `border p-4 ml-2 bg-green-500 text-slate-100`,
-    count: `text-center p-2`,
+    bg: "h-screen w-screen p-4 bg-gradient-to-r from-red-300 to-red-200",
+    container: "bg-slate-100 max-w-[1000px] w-full m-auto rounded-md shadow-xl p-4",
+    heading: "text-4xl font-bold text-center text-gray-800 p-4",
+    form: "flex flex-wrap justify-between m-5",
+    input: "border p-2 w-full text-xl my-2",
+    button: "border p-4 ml-2 bg-green-500 text-slate-100",
+    saveButton: "border p-4 ml-2 bg-blue-500 text-slate-100",
+    count: "text-center p-2",
+    todoList: "my-4 p-4",
 };
 
 function Task() {
-    const [todos, setTodos] = useState([]);
-    const [input, setInput] = useState("");
     const [selectedTodo, setSelectedTodo] = useState(null);
+    const [todos, setTodos] = useState([]);
+    const [title, setTitle] = useState("");
+    const [date, setDate] = useState("");
+    const [time, setTime] = useState("");
+    const [description, setDescription] = useState("");
+    const [priority, setPriority] = useState("low");
     const [editText, setEditText] = useState("");
-    console.log(input);
+    const [editDate, setEditDate] = useState("");
+    const [editTime, setEditTime] = useState("");
+    const [editDescription, setEditDescription] = useState("");
+    const [editProirety, setEditProirety] = useState("");
+
+
+    console.log(todos);
 
     // create todo
     const createTodo = async (e) => {
         e.preventDefault();
-       
+
         await addDoc(collection(db, "todos"), {
-            text: input,
+            title: title,
+            date: date,
+            time: time,
+            description: description,
+            priority: priority,
             completed: false,
         });
-        setInput("");
+
+        // Reset the input fields
+        setTitle("");
+        setDate("");
+        setTime("");
+        setDescription("");
+        setPriority("low");
     };
 
     // read todo from firebase
@@ -46,8 +68,12 @@ function Task() {
         const unsubscribe = onSnapshot(dbpath, (querySnapshot) => {
             let todosArr = [];
             querySnapshot.forEach((doc) => {
-                todosArr.push({ ...doc.data(), id: doc.id });
+                todosArr.push({
+                    id: doc.id,
+                    ...doc.data(),
+                });
             });
+
             setTodos(todosArr);
         });
         return () => unsubscribe();
@@ -62,22 +88,35 @@ function Task() {
 
     // delete todo
     const deleteTodo = async (id) => {
-        await deleteDoc(doc(db, 'todos', id))
-    }
+        await deleteDoc(doc(db, "todos", id));
+    };
 
     // edit todo
     const handleEditTodo = (todo) => {
         setSelectedTodo(todo);
-        setEditText(todo.text);
+        setTitle(todo.title);
+        setDate(todo.date);
+        setTime(todo.time);
+        setDescription(todo.description);
+        setPriority(todo.priority);
+        setEditText(todo.title);
+        setEditDate(todo.date)
+        setEditTime(todo.time)
+        setEditDescription(todo.description)
+        setEditProirety(todo.priority)
+
     };
 
     const updateTodo = async () => {
-        
         await updateDoc(doc(db, "todos", selectedTodo.id), {
-            text: editText,
+            title: editText,
+            date: editDate,
+            time: editTime,
         });
         setSelectedTodo(null);
-        setEditText("");
+        setEditText("")
+        setEditDate("")
+        setEditTime("")
     };
 
     return (
@@ -88,36 +127,96 @@ function Task() {
                     <input
                         className={style.input}
                         type="text"
-                        placeholder="Add Todo"
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
+                        placeholder="Title"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
                     />
+                    <input
+                        className={style.input}
+                        type="date"
+                        value={date}
+                        onChange={(e) => setDate(e.target.value)}
+                    />
+                    <input
+                        className={style.input}
+                        type="time"
+                        value={time}
+                        onChange={(e) => setTime(e.target.value)}
+                    />
+                    <textarea
+                        className={style.input}
+                        placeholder="Description"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                    ></textarea>
+                    <select
+                        className={style.input}
+                        value={priority}
+                        onChange={(e) => setPriority(e.target.value)}
+                    >
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
                     <button className={style.button}>
                         <AiOutlinePlus size={30} />
                     </button>
                 </form>
+
                 {selectedTodo ? (
                     <div>
+
+
                         <input
                             className={style.input}
                             type="text"
                             value={editText}
-                            onChange={(e) => setEditText(e.target.value)}
+                            onChange={(e) => {
+                                setEditText(e.target.value);
+
+                            }}
+
                         />
-                        <button onClick={updateTodo}>Save</button>
+
+
+                        <input
+                            className={style.input}
+                            type="text"
+                            value={editDate}
+                            onChange={(e) => {
+                                setEditDate(e.target.value);
+
+                            }}
+
+                        />
+
+                        <input
+                            className={style.input}
+                            type="text"
+                            value={editTime}
+                            onChange={(e) => {
+                                setEditTime(e.target.value);
+
+                            }}
+
+                        />
+
+
+                        <button className={style.saveButton} onClick={updateTodo}>
+                            Save
+                        </button>
                     </div>
                 ) : (
                     <div>
-                        <ul>
-                            {todos.map((todo, index) => (
+                        <ul className={style.todoList}>
+                            {todos.map((todo) => (
                                 <Todo
-                                    key={index}
+                                    key={todo.id}
                                     todo={todo}
                                     toggleComplete={toggleComplete}
                                     deleteTodo={deleteTodo}
                                     editTodo={handleEditTodo}
                                     updateTodo={updateTodo}
-                                    editText={editText}
                                 />
                             ))}
                         </ul>

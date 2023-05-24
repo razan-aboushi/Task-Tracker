@@ -1,0 +1,56 @@
+.task-container {
+    background: linear-gradient(to right, #f03e3e, #fbb6b6);
+    padding: 4px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.task-heading {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+    padding: 8px;
+}
+
+.task-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 5px;
+}
+
+.task-input {
+    border: none;
+    padding: 8px;
+    width: 100%;
+    font-size: 1.5rem;
+    margin: 5px;
+}
+
+.task-button,
+.task-save-button {
+    border: none;
+    padding: 16px;
+    background-color: #4caf50;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.task-save-button {
+    background-color: #2196f3;
+}
+
+.task-todo-list {
+    margin: 16px;
+    padding: 16px;
+}
+
+.task-count {
+    text-align: center;
+    padding: 8px;
+    color: #333;
+}
