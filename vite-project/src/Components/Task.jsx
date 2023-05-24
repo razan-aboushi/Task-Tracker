@@ -25,6 +25,9 @@ const style = {
 };
 
 function Task() {
+
+
+
     const [selectedTodo, setSelectedTodo] = useState(null);
     const [todos, setTodos] = useState([]);
     const [title, setTitle] = useState("");
@@ -38,8 +41,13 @@ function Task() {
     const [editDescription, setEditDescription] = useState("");
     const [editProirety, setEditProirety] = useState("");
 
-
     console.log(todos);
+    let xc = todos
+    const [searchTerm, setSearchTerm] = useState('');
+    const [FilterData, setFilterData] = useState([]);
+
+
+
 
     // create todo
     const createTodo = async (e) => {
@@ -75,6 +83,7 @@ function Task() {
             });
 
             setTodos(todosArr);
+            setFilterData(todosArr);
         });
         return () => unsubscribe();
     }, []);
@@ -119,11 +128,31 @@ function Task() {
         setEditTime("")
     };
 
+
+    const filterDataByName = (searchTerm) => {
+        const filteredData = todos.filter(item =>
+            item.title.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFilterData(filteredData);
+    }
+
     return (
-        <div className={style.bg}>
+        <div>
+
             <div className={style.container}>
+
                 <h3 className={style.heading}>Todo App</h3>
                 <form className={style.form} onSubmit={createTodo}>
+
+                    <input type='text' placeholder='Search' style={{ border: "1px solid black", }}
+                        value={searchTerm}
+                        onChange={(e) => {
+                            setSearchTerm(e.target.value);
+                            filterDataByName(e.target.value);
+                        }
+                        } />
+
+
                     <input
                         className={style.input}
                         type="text"
@@ -230,19 +259,24 @@ function Task() {
                 ) : (
                     <div>
                         <ul className={style.todoList}>
-                            {todos.map((todo) => (
-                                <Todo
-                                    key={todo.id}
-                                    todo={todo}
-                                    toggleComplete={toggleComplete}
-                                    deleteTodo={deleteTodo}
-                                    editTodo={handleEditTodo}
-                                    updateTodo={updateTodo}
-                                />
-                            ))}
+                            {FilterData?.map((todo) => {
+                                return (
+                                    <>
+                                        <Todo
+                                            key={todo.id}
+                                            todo={todo}
+                                            toggleComplete={toggleComplete}
+                                            deleteTodo={deleteTodo}
+                                            editTodo={handleEditTodo}
+                                            updateTodo={updateTodo}
+                                        />
+                                    </>
+                                )
+                            }
+                            )}
                         </ul>
-                        {todos.length < 1 ? null : (
-                            <p className={style.count}>{`You have ${todos.length} todos`}</p>
+                        {FilterData.length < 1 ? null : (
+                            <p className={style.count}>{`You have ${FilterData.length} todos`}</p>
                         )}
                     </div>
                 )}
